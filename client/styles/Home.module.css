@@ -1,10 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
+
 .main {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   padding: 6rem;
   min-height: 100vh;
+}
+
+.title {
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+  font-size: 3rem;
+  max-width: var(--max-width);
+  width: 100%;
+  z-index: 2;
+  font-family: "Open Sans", sans-serif;
 }
 
 .description {
@@ -15,7 +28,7 @@
   max-width: var(--max-width);
   width: 100%;
   z-index: 2;
-  font-family: var(--font-mono);
+  font-family: open-sans;
 }
 
 .description a {
@@ -29,8 +42,8 @@
   position: relative;
   margin: 0;
   padding: 1rem;
-  background-color: rgba(var(--callout-rgb), 0.5);
-  border: 1px solid rgba(var(--callout-border-rgb), 0.3);
+  /* background-color: rgba(var(--callout-rgb), 0.5); */
+  /* border: 1px solid rgba(var(--callout-border-rgb), 0.3); */
   border-radius: var(--border-radius);
 }
 
