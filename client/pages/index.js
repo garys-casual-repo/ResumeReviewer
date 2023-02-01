@@ -1,11 +1,14 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
+import Image from "next/image";
 
+import examplePic from "../public/wakeupcat.jpg";
 import { readImg } from "../lib/cloudVision";
 
+const imgFile = "./public/wakeupcat.jpg";
+
 export async function getStaticProps() {
-  const texts = await readImg("./resources/wakeupcat.jpg");
-  console.log(texts);
+  const texts = await readImg(imgFile);
   return {
     props: {
       texts,
@@ -28,6 +31,7 @@ export default function Home({ texts }) {
         </div>
 
         <div>
+          <Image src={examplePic} alt="Example Pic" />
           <h2 className={styles.headingLg}>Texts in Image: </h2>
           <p className={styles.normalText}>{texts[0].description}</p>
         </div>
