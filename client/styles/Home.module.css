@@ -3,9 +3,9 @@
 
 .main {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   padding: 6rem;
   min-height: 100vh;
 }
@@ -16,7 +16,6 @@
   align-items: inherit;
   font-size: 3rem;
   max-width: var(--max-width);
-  width: 100%;
   z-index: 2;
   font-family: "Open Sans", sans-serif;
 }
@@ -27,7 +26,6 @@
   align-items: inherit;
   font-size: 2rem;
   max-width: var(--max-width);
-  width: 100%;
   z-index: 2;
   font-family: "Source Sans", sans-serif;
 }
@@ -37,8 +35,7 @@
   justify-content: inherit;
   align-items: inherit;
   font-size: 1rem;
-  max-width: var(--max-width);
-  width: 100%;
+  /* max-width: var(--max-width); */
   z-index: 2;
   font-family: "Source Sans", sans-serif;
 }
