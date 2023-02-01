@@ -1,11 +1,19 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 
-const inter = Inter({ subsets: ["latin"] });
+import { readImg } from "../lib/cloudVision";
 
-export default function Home() {
+export async function getStaticProps() {
+  const texts = await readImg("./resources/wakeupcat.jpg");
+  console.log(texts);
+  return {
+    props: {
+      texts,
+    },
+  };
+}
+
+export default function Home({ texts }) {
   return (
     <>
       <Head>
@@ -17,6 +25,11 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.title}>
           <p>Rizzme Reviewer</p>
+        </div>
+
+        <div>
+          <h2 className={styles.headingLg}>Texts in Image: </h2>
+          <h3>{texts[0].description}</h3>
         </div>
       </main>
     </>
