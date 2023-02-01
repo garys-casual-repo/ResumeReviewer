@@ -29,7 +29,7 @@ export default function Home({ texts }) {
 
         <div>
           <h2 className={styles.headingLg}>Texts in Image: </h2>
-          <h3>{texts[0].description}</h3>
+          <p className={styles.normalText}>{texts[0].description}</p>
         </div>
       </main>
     </>
