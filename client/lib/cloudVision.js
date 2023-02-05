@@ -17,18 +17,11 @@ export async function readDocument(bucketName, fileName) {
   // Creates a client
   const client = new vision.ImageAnnotatorClient();
 
-  /**
-   * TODO(developer): Uncomment the following lines before running the sample.
-   */
-  // Bucket where the file resides
-  // const bucketName = 'my-bucket';
-  // Path to PDF file within bucket
-  // const fileName = 'path/to/document.pdf';
-  // The folder to store the results
   const outputPrefix = "results";
-
+  const fileNameWithoutPostfix = fileName.split(".");
   const gcsSourceUri = `gs://${bucketName}/${fileName}`;
-  const gcsDestinationUri = `gs://${bucketName}/${outputPrefix}/`;
+  const gcsDestinationUri =
+    `gs://${bucketName}/${outputPrefix}/${fileNameWithoutPostfix[0]}` + "_";
 
   const inputConfig = {
     // Supported mime_types are: 'application/pdf' and 'image/tiff'
