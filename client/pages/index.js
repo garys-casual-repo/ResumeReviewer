@@ -3,7 +3,7 @@ import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 
 import examplePic from "../public/wakeupcat.jpg";
-import { readImg, readDocument } from "../lib/cloudVision";
+import { readImg } from "../lib/cloudVision";
 import { getResultJson } from "../lib/cloudStorageUtils";
 
 const imgFile = "./public/wakeupcat.jpg";
@@ -13,8 +13,8 @@ export async function getStaticProps() {
   const texts = await readImg(imgFile);
   const file = "Gary Zhou_Resume_20221005.pdf";
   const fileNameWithoutPostfix = file.split(".")[0];
-  readDocument(bucketName, file);
-  getResultJson(bucketName, fileNameWithoutPostfix);
+  const jsonString = await getResultJson(bucketName, fileNameWithoutPostfix);
+  console.log(jsonString);
   return {
     props: {
       texts,
