@@ -3,12 +3,14 @@ import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 
 import examplePic from "../public/wakeupcat.jpg";
-import { readImg } from "../lib/cloudVision";
+import { readImg, readDocument } from "../lib/cloudVision";
 
 const imgFile = "./public/wakeupcat.jpg";
+const bucketName = "resume_reviewer";
 
 export async function getStaticProps() {
   const texts = await readImg(imgFile);
+  readDocument(bucketName, "Gary Zhou_Resume_20221005.pdf");
   return {
     props: {
       texts,
