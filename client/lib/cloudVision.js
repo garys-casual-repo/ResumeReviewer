@@ -51,4 +51,5 @@ export async function readDocument(bucketName, fileName) {
   const destinationUri =
     filesResponse.responses[0].outputConfig.gcsDestination.uri;
   console.log("Json saved to: " + destinationUri);
+  return destinationUri;
 }
