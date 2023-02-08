@@ -2,21 +2,16 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 
-import examplePic from "../public/wakeupcat.jpg";
-import { readImg } from "../lib/cloudVision";
 import { getResultJson } from "../lib/cloudStorageUtils";
 
-const imgFile = "./public/wakeupcat.jpg";
 const bucketName = "resume_reviewer";
 
 export async function getStaticProps() {
-  const texts = await readImg(imgFile);
   const file = "Gary Zhou_Resume_20221005.pdf";
   const fileNameWithoutPostfix = file.split(".")[0];
   const jsonString = await getResultJson(bucketName, fileNameWithoutPostfix);
-  const fullText = jsonString.responses[0].fullTextAnnotation.text;
+  const texts = jsonString.responses[0].fullTextAnnotation.text;
 
-  console.log(fullTextAnnotation);
   return {
     props: {
       texts,
@@ -39,9 +34,8 @@ export default function Home({ texts }) {
         </div>
 
         <div>
-          <Image src={examplePic} alt="Example Pic" />
-          <h2 className={styles.headingLg}>Texts in Image: </h2>
-          <p className={styles.normalText}>{texts[0].description}</p>
+          <h2 className={styles.headingLg}>Texts in Resume: </h2>
+          <p className={styles.normalText}>{texts}</p>
         </div>
       </main>
     </>
