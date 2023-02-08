@@ -3,6 +3,7 @@ import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 
 import { getResultJson } from "../lib/cloudStorageUtils";
+import { reviewResume } from "../lib/chatGPTApi";
 
 const bucketName = "resume_reviewer";
 
@@ -11,7 +12,8 @@ export async function getStaticProps() {
   const fileNameWithoutPostfix = file.split(".")[0];
   const jsonString = await getResultJson(bucketName, fileNameWithoutPostfix);
   const texts = jsonString.responses[0].fullTextAnnotation.text;
-
+  const reviewedResume = reviewResume(texts);
+  console.log(reviewedResume);
   return {
     props: {
       texts,
