@@ -14,7 +14,9 @@ export async function getStaticProps() {
   const file = "Gary Zhou_Resume_20221005.pdf";
   const fileNameWithoutPostfix = file.split(".")[0];
   const jsonString = await getResultJson(bucketName, fileNameWithoutPostfix);
-  console.log(jsonString);
+  const fullText = jsonString.responses[0].fullTextAnnotation.text;
+
+  console.log(fullTextAnnotation);
   return {
     props: {
       texts,
