@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import Image from "next/image";
+import { useState } from "react";
 
 import { getResultJson } from "../lib/cloudStorageUtils";
 import { reviewResume } from "../lib/chatGPTApi";
@@ -12,8 +12,6 @@ export async function getStaticProps() {
   const fileNameWithoutPostfix = file.split(".")[0];
   const jsonString = await getResultJson(bucketName, fileNameWithoutPostfix);
   const texts = jsonString.responses[0].fullTextAnnotation.text;
-  const reviewedResume = reviewResume(texts);
-  console.log(reviewedResume);
   return {
     props: {
       texts,
@@ -21,7 +19,24 @@ export async function getStaticProps() {
   };
 }
 
-export default function Home({ texts }) {
+export default function Home({ texts, reviewedResume }) {
+  const [resultResume, setResultResume] = useState();
+
+  async function onResumeSubmit(event) {
+    console.log("test");
+    event.preventDefault();
+
+    try {
+      const reviewedResume = await reviewResume(texts);
+      console.log(reviewedResume);
+      setResultResume(reviewedResume);
+    } catch (error) {
+      // Consider implementing your own error handling logic here
+      console.error(error);
+      alert(error.message);
+    }
+  }
+
   return (
     <>
       <Head>
@@ -32,12 +47,24 @@ export default function Home({ texts }) {
       </Head>
       <main className={styles.main}>
         <div className={styles.title}>
-          <p>Rizzme Reviewer</p>
+          <p>Resuzzme Reviewer</p>
         </div>
 
         <div>
           <h2 className={styles.headingLg}>Texts in Resume: </h2>
           <p className={styles.normalText}>{texts}</p>
+          <form
+            onSubmit={async (e) => {
+              alert("test");
+            }}
+          >
+            <button type="submit">Submit Resume</button>
+          </form>
+        </div>
+
+        <div>
+          <h2 className={styles.headingLg}>Improved Texts: </h2>
+          {reviewedResume}
         </div>
       </main>
     </>

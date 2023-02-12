@@ -1,7 +1,4 @@
 import { Configuration, OpenAIApi } from "openai";
-
-const dotenv = require("dotenv");
-dotenv.config();
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -17,15 +14,12 @@ export async function reviewResume(resumeTextInput) {
     prompt: generatePrompt(resumeText),
     temperature: 0.6,
   });
-  return completion.data.choices[0].text;
+  return completion.data.choices;
 }
 
 function generatePrompt(resumeText) {
   return `Please review the following resume 
   ${resumeText} 
-  and return the improved resume as jsx component to be displayed on a
-  web App. Example of jsx component:
-    <Head>
-      <title>Gary's Resume Reviewer</title>
-    </Head>`;
+  and return a improved version of the resume.
+  Please also list out the things that need to be improved for the resume.`;
 }

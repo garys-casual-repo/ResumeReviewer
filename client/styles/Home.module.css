@@ -47,6 +47,12 @@
   gap: 0.5rem;
 }
 
+.button {
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+}
+
 .description p {
   position: relative;
   margin: 0;
