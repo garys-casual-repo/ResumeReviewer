@@ -8,7 +8,7 @@ import { reviewResume } from "../lib/chatGPTApi";
 const bucketName = "resume_reviewer";
 
 export async function getStaticProps() {
-  const file = "Gary Zhou_Resume_20221005.pdf";
+  const file = "software-engineer-1527758966.pdf";
   const fileNameWithoutPostfix = file.split(".")[0];
   const jsonString = await getResultJson(bucketName, fileNameWithoutPostfix);
   const texts = jsonString.responses[0].fullTextAnnotation.text;
@@ -19,7 +19,7 @@ export async function getStaticProps() {
   };
 }
 
-export default function Home({ texts, reviewedResume }) {
+export default function Home({ texts }) {
   const [resultResume, setResultResume] = useState();
 
   async function onResumeSubmit(event) {
@@ -28,7 +28,6 @@ export default function Home({ texts, reviewedResume }) {
 
     try {
       const reviewedResume = await reviewResume(texts);
-      console.log(reviewedResume);
       setResultResume(reviewedResume);
     } catch (error) {
       // Consider implementing your own error handling logic here
@@ -55,7 +54,7 @@ export default function Home({ texts, reviewedResume }) {
           <p className={styles.normalText}>{texts}</p>
           <form
             onSubmit={async (e) => {
-              alert("test");
+              onResumeSubmit(e);
             }}
           >
             <button type="submit">Submit Resume</button>
@@ -64,7 +63,11 @@ export default function Home({ texts, reviewedResume }) {
 
         <div>
           <h2 className={styles.headingLg}>Improved Texts: </h2>
-          {reviewedResume}
+          <div>
+            {/* {resultResume.map((choice) => {
+              <p>{choice.text}</p>;
+            })} */}
+          </div>
         </div>
       </main>
     </>
