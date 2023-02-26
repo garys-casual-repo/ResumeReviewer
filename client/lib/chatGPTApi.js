@@ -1,6 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
+
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -14,7 +15,12 @@ export async function reviewResume(resumeTextInput) {
     prompt: generatePrompt(resumeText),
     temperature: 0.6,
   });
-  return completion.data.choices;
+
+  console.log(completion.data.choices.length);
+  const result = completion.data.choices.map((line) => {
+    return line.text;
+  });
+  return result;
 }
 
 function generatePrompt(resumeText) {

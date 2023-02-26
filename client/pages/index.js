@@ -5,6 +5,8 @@ import { useState } from "react";
 import { getResultJson } from "../lib/cloudStorageUtils";
 import { reviewResume } from "../lib/chatGPTApi";
 
+import Result from "../components/result";
+
 const bucketName = "resume_reviewer";
 
 export async function getStaticProps() {
@@ -20,14 +22,13 @@ export async function getStaticProps() {
 }
 
 export default function Home({ texts }) {
-  const [resultResume, setResultResume] = useState();
-
+  const [resultResume, setResultResume] = useState(["loading"]);
   async function onResumeSubmit(event) {
-    console.log("test");
     event.preventDefault();
 
     try {
       const reviewedResume = await reviewResume(texts);
+      console.log(reviewedResume.length);
       setResultResume(reviewedResume);
     } catch (error) {
       // Consider implementing your own error handling logic here
@@ -35,7 +36,6 @@ export default function Home({ texts }) {
       alert(error.message);
     }
   }
-
   return (
     <>
       <Head>
@@ -63,11 +63,7 @@ export default function Home({ texts }) {
 
         <div>
           <h2 className={styles.headingLg}>Improved Texts: </h2>
-          <div>
-            {/* {resultResume.map((choice) => {
-              <p>{choice.text}</p>;
-            })} */}
-          </div>
+          <Result texts={resultResume} />
         </div>
       </main>
     </>
