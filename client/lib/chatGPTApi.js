@@ -5,21 +5,26 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export async function reviewResume(resumeTextInput) {
+export async function reviewResume(resumeTextInput, resumeCategory) {
   const resumeText = resumeTextInput || "";
   if (resumeText.trim().length === 0) {
     alert("No text detected in resume");
   }
-  const edit = await openai.createEdit({
+  const editResume = await openai.createEdit({
     model: "text-davinci-edit-001",
     input: resumeText,
-    instruction: generatePrompt(),
+    instruction: generatePrompt(resumeCategory),
   });
-  console.log(edit);
-  const result = edit.data.choices[0].text;
-  return result;
+  const result = editResume.data.choices[0].text;
+
+  const formattedResume = await openai.createEdit({
+    model: "text-davinci-edit-001",
+    input: result,
+    instruction: "Format the resume in Markdown",
+  });
+  return formattedResume.data.choices[0].text;
 }
 
-function generatePrompt() {
-  return `Edit the resume to attract HR`;
+function generatePrompt(resumeCategory) {
+  return `Improve the ${resumeCategory} resume`;
 }

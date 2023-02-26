@@ -8,6 +8,7 @@ import { reviewResume } from "../lib/chatGPTApi";
 import Result from "../components/result";
 
 const bucketName = "resume_reviewer";
+const resumeCategory = "software engineering";
 
 export async function getStaticProps() {
   const file = "software-engineer-1527758966.pdf";
@@ -25,14 +26,15 @@ export default function Home({ texts }) {
   const [resultResume, setResultResume] = useState("");
   async function onResumeSubmit(event) {
     event.preventDefault();
-    setResultResume("Loading...");
+    setResultResume(`Loading...`);
     try {
-      const reviewedResume = await reviewResume(texts);
+      const reviewedResume = await reviewResume(texts, resumeCategory);
       setResultResume(reviewedResume);
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
+      setResultResume("Error");
     }
   }
   return (
@@ -59,6 +61,7 @@ export default function Home({ texts }) {
             <button type="submit">Submit Resume</button>
           </form>
         </div>
+        <div></div>
 
         <div>
           <h2 className={styles.headingLg}>Improved Texts: </h2>
