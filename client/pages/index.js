@@ -22,13 +22,12 @@ export async function getStaticProps() {
 }
 
 export default function Home({ texts }) {
-  const [resultResume, setResultResume] = useState(["loading"]);
+  const [resultResume, setResultResume] = useState("");
   async function onResumeSubmit(event) {
     event.preventDefault();
-
+    setResultResume("Loading...");
     try {
       const reviewedResume = await reviewResume(texts);
-      console.log(reviewedResume.length);
       setResultResume(reviewedResume);
     } catch (error) {
       // Consider implementing your own error handling logic here
@@ -63,7 +62,7 @@ export default function Home({ texts }) {
 
         <div>
           <h2 className={styles.headingLg}>Improved Texts: </h2>
-          <Result texts={resultResume} />
+          <Result text={resultResume} />
         </div>
       </main>
     </>

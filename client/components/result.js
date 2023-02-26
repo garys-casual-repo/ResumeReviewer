@@ -10,9 +10,7 @@ export default class Result extends Component {
   render() {
     return (
       <div>
-        {this.props.texts.map((line) => {
-          return <p className={styles.normalText}>{line}</p>;
-        })}
+        <p className={styles.normalText}>{this.props.text}</p>
       </div>
     );
   }
