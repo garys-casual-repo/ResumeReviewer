@@ -11,12 +11,9 @@ export default class Result extends Component {
   }
 
   render() {
-    // const text = parse(this.props.text);
     return (
       <div>
         <ReactMarkdown children={this.props.text}></ReactMarkdown>
-
-        {/* <p className={styles.normalText}>{this.props.text}</p> */}
       </div>
     );
   }
