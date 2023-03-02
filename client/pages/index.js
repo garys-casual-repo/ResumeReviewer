@@ -1,14 +1,18 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { useState } from "react";
-
 import { getResultJson } from "../lib/cloudStorageUtils";
 import { reviewResume } from "../lib/chatGPTApi";
+import dynamic from "next/dynamic";
 
 import Result from "../components/result";
 
 const bucketName = "resume_reviewer";
 const resumeCategory = "software engineering";
+
+const PDFViewer = dynamic(() => import("../components/pdfViewer.js"), {
+  ssr: false,
+});
 
 export async function getStaticProps() {
   const file = "software-engineer-1527758966.pdf";
@@ -24,6 +28,20 @@ export async function getStaticProps() {
 
 export default function Home({ texts }) {
   const [resultResume, setResultResume] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
+
+  const MyDocument = () => (
+    <Document>
+      <Document onLoadSuccess={onDocumentLoadSuccess}>
+        <Page pageNumber={pageNumber} />
+      </Document>
+    </Document>
+  );
+
   async function onResumeSubmit(event) {
     event.preventDefault();
     setResultResume(`Loading...`);
@@ -51,8 +69,8 @@ export default function Home({ texts }) {
         </div>
 
         <div>
-          <h2 className={styles.headingLg}>Texts in Resume: </h2>
-          <p className={styles.normalText}>{texts}</p>
+          <h2 className={styles.headingLg}>Resume: </h2>
+          <PDFViewer />
           <form
             onSubmit={async (e) => {
               onResumeSubmit(e);
